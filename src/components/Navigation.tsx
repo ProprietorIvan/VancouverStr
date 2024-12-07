@@ -1,57 +1,62 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Menu, X } from 'lucide-react';
+import Image from 'next/image';
 
-const Navigation = ({ currentPage, showActions = true, transparent }: any) => {
-  const { push } = useRouter()
+interface NavigationProps {
+  currentPage?: string;
+  showActions?: boolean;
+  transparent?: boolean;
+}
+
+const Navigation = ({ currentPage, showActions = true, transparent = true }: NavigationProps) => {
+  const { push } = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
     { text: 'Home', url: '/' },
-    // { text: 'About', url: '/about' },
-    // { text: 'Services', url: '/services' },
-    // { text: 'Why hire us', url: '/why-chose-us', },
-    // { text: 'Contact', url: '/contact' },
+    { text: 'Properties', url: '/properties' },
+    { text: 'Locations', url: '/locations' },
+    { text: 'About', url: '/about' },
+    { text: 'Contact', url: '/contact' },
   ];
 
   return (
-    <nav className={`relative ${transparent ? 'bg-transparent !absolute left-0 top-0 w-full z-50' : "bg-withe"}`}>
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-20 sm:h-32">
-          {/* Logo - Updated with responsive sizes */}
-          <div className="flex items-center gap-2">
-            <div className="w-20 sm:w-32">
-              <img src="./logo.webp" alt='Handyman logo' className="w-full h-auto" />
-            </div>
+    <nav className={`relative ${transparent ? 'bg-transparent !absolute left-0 top-0 w-full z-50' : 'bg-white'}`}>
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <div 
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => push('/')}
+          >
+            <span className="text-lg font-semibold tracking-tight text-white">Vancouver Stay</span>
           </div>
 
           {/* Desktop Navigation */}
-
-          {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-4">
-            {showActions ? (
-              <div className='flex flex-1 items-center justify-end gap-8 w-100'>
-                {navLinks.map((link, index) => (
-                  <a
-                    key={index}
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      push(link.url)
-                    }}
-                    className={`text-xl hover:text-[#ffc526] transition-colors ${transparent ? 'text-white hover:text-[#FACC15]' : 'text-gray-500'}`}
-                  >
-                    {link.text}
-                  </a>
-                ))}
-              </div>
-
-            ) : (
-              <button
-                onClick={() => window.open('/services', '_current')}
-                className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link, index) => (
+              <a
+                key={index}
+                href={link.url}
+                onClick={(e) => {
+                  e.preventDefault();
+                  push(link.url);
+                }}
+                className={`text-sm font-medium hover:text-white/70 transition-colors ${
+                  transparent ? 'text-white' : 'text-gray-900'
+                }`}
               >
-                Get Your Quote Now
+                {link.text}
+              </a>
+            ))}
+
+            {showActions && (
+              <button
+                onClick={() => push('/book')}
+                className="bg-white text-black px-6 py-2 rounded-full text-sm font-medium hover:bg-white/90 transition-all duration-300"
+              >
+                Book Now
               </button>
             )}
           </div>
@@ -60,12 +65,12 @@ const Navigation = ({ currentPage, showActions = true, transparent }: any) => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="p-2 rounded-full hover:bg-white/10 transition-colors"
             >
               {isMenuOpen ? (
-                <X className="h-6 w-6 stroke-white" />
+                <X className="h-6 w-6 text-white" />
               ) : (
-                <Menu className="h-6 w-6 stroke-white" />
+                <Menu className="h-6 w-6 text-white" />
               )}
             </button>
           </div>
@@ -73,38 +78,34 @@ const Navigation = ({ currentPage, showActions = true, transparent }: any) => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className={`md:hidden absolute top-16 left-0 right-0 bg-white ${transparent ? 'bg-white' : null} border-b shadow-lg z-50`}>
-            <div className="px-4 py-2 space-y-1">
+          <div className="md:hidden absolute top-20 left-0 right-0 bg-black/95 backdrop-blur-lg border-b border-white/10 shadow-lg">
+            <div className="px-6 py-4 space-y-3">
               {navLinks.map((link, index) => (
                 <a
                   key={index}
-                  href="#"
+                  href={link.url}
                   onClick={(e) => {
                     e.preventDefault();
-                    push(link.url)
+                    push(link.url);
                     setIsMenuOpen(false);
                   }}
-                  className={`block py-2 px-4 text-gray-500 hover:bg-gray-50 rounded-lg transition-colors`}
+                  className="block py-2 text-white/90 hover:text-white transition-colors text-sm font-medium"
                 >
                   {link.text}
                 </a>
               ))}
 
-              {/* Mobile Actions */}
-              <div>
-                {showActions ? (
-                  null
-                ) : (
-                  <button
-                    onClick={() => {
-                      setIsMenuOpen(false);
-                    }}
-                    className="w-full bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
-                  >
-                    Get Started Now
-                  </button>
-                )}
-              </div>
+              {showActions && (
+                <button
+                  onClick={() => {
+                    push('/book');
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-white/90 transition-all duration-300 mt-4"
+                >
+                  Book Now
+                </button>
+              )}
             </div>
           </div>
         )}
