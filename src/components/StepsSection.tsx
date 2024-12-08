@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link'; // Importing Link for proper navigation
 
 const StepsSection = () => {
   const metrics = [
@@ -24,45 +25,25 @@ const StepsSection = () => {
   const featuredProperties = [
     {
       id: 1,
-      name: "Coal Harbour View",
-      location: "Coal Harbour",
-      image: "/api/placeholder/800/600", // Replace with actual property images
-      type: "Waterfront Suite"
+      name: "Homer Street Suite",
+      location: "Downtown Vancouver",
+      image: "/photos/homer/HomerLaunder13.jpg",
+      type: "Modern Downtown Living",
+      href: "/homerproperty" // Updated to match the page filename
     },
     {
       id: 2,
-      name: "Yaletown Loft",
-      location: "Yaletown",
-      image: "/api/placeholder/800/600",
-      type: "Modern Loft"
+      name: "Seymour Residence",
+      location: "Downtown Vancouver",
+      image: "/photos/seymour/1.jpeg",
+      type: "Urban Luxury Suite"
     },
     {
       id: 3,
-      name: "Gastown Heritage",
-      location: "Gastown",
-      image: "/api/placeholder/800/600",
-      type: "Heritage Building"
-    },
-    {
-      id: 4,
-      name: "West End Vista",
-      location: "West End",
-      image: "/api/placeholder/800/600",
-      type: "Ocean View"
-    },
-    {
-      id: 5,
-      name: "Downtown Penthouse",
-      location: "Downtown",
-      image: "/api/placeholder/800/600",
-      type: "Luxury Penthouse"
-    },
-    {
-      id: 6,
-      name: "False Creek Suite",
-      location: "False Creek",
-      image: "/api/placeholder/800/600",
-      type: "Waterfront Living"
+      name: "Howe Street Haven",
+      location: "Downtown Vancouver",
+      image: "/photos/howe/1.jpg",
+      type: "Executive Accommodation"
     }
   ];
 
@@ -74,7 +55,7 @@ const StepsSection = () => {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">Why Choose Vancouver Stay</h2>
             <p className="text-gray-400 max-w-2xl mx-auto">
-              Experience luxury living with our premium short-term rentals in Vancouver&apos;s most desired locations
+              Experience luxury living with our premium short-term rentals in Vancouver&apos;s most desired locations.
             </p>
           </div>
 
@@ -105,22 +86,24 @@ const StepsSection = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProperties.map((property) => (
-              <div key={property.id} className="group relative overflow-hidden rounded-xl shadow-lg">
-                <div className="relative h-80 w-full">
-                  <Image 
-                    src={property.image}
-                    alt={property.name}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="text-xl font-semibold mb-1">{property.name}</h3>
-                    <p className="text-sm opacity-90">{property.location}</p>
-                    <p className="text-sm text-gray-300 mt-2">{property.type}</p>
+              <Link href={property.href || "#"} key={property.id}>
+                <div className="group relative overflow-hidden rounded-xl shadow-lg cursor-pointer">
+                  <div className="relative h-80 w-full">
+                    <Image 
+                      src={property.image}
+                      alt={property.name}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                      <h3 className="text-xl font-semibold mb-1">{property.name}</h3>
+                      <p className="text-sm opacity-90">{property.location}</p>
+                      <p className="text-sm text-gray-300 mt-2">{property.type}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 

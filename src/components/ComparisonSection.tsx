@@ -46,7 +46,7 @@ const ComparisonSection = () => {
       title: "Extended Stays",
       description: "Whether you&apos;re in Vancouver for business or pleasure, our properties are perfect for extended stays. Fully furnished with premium amenities, they offer all the comforts of home.",
       buttonText: "Long-Term Options",
-      image: "/photos/933Seymour/933Seymour9.jpeg",
+      image: "/photos/seymour/1.jpeg",
       orientation: "left",
       url: "/extended-stays"
     }
